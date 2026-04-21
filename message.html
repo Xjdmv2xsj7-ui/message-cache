@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ton Message</title>
+</head>
+
+<body style="text-align:center; font-family:Arial; padding:50px; background:#111; color:white;">
+
+    <h1>Voici ton message…</h1>
+
+    <p id="message" style="font-size:22px; margin-top:30px;"></p>
+
+<script>
+var messages = [
+"Une réponse arrive bientôt dans ta vie…",
+"Quelqu’un pense à toi en silence…",
+"Un changement important est en préparation…",
+"Une personne de ton passé va refaire surface…",
+"Tu es plus proche d’une réponse que tu ne le crois…",
+"Une opportunité inattendue arrive très bientôt…",
+"Ton intuition a raison, fais-lui confiance…",
+"Quelque chose que tu attends va se débloquer…",
+"Ne force pas les choses, laisse venir…",
+"Un signe va apparaître dans les prochains jours…"
+];
+
+var random = messages[Math.floor(Math.random() * messages.length)];
+
+document.getElementById("message").innerText = random;
+</script>
+
+</body>
+</html>
