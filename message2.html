@@ -1,37 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ton Message</title>
+    <title>Message détaillé</title>
 </head>
 
 <body style="text-align:center; font-family:Arial; padding:50px; background:#0f0f0f; color:white;">
 
-<h1>Message détaillé</h1>
+<h1>Ton message détaillé</h1>
 
-<p id="message" style="font-size:20px; margin-top:30px;"></p>
+<p id="message" style="font-size:18px; margin-top:40px; line-height:1.6;"></p>
 
 <script>
-var messages = [
-"Tu traverses une période de transition importante…",
-"Une décision que tu repousses doit être prise…",
-"Ce que tu ressens est un signal intérieur fort…",
-"Une situation va évoluer rapidement…",
-"Quelqu’un influence encore ton énergie…",
-"Tu dois faire confiance à ton instinct…",
-"Un changement professionnel ou personnel arrive…",
-"Une réponse émotionnelle va apparaître bientôt…",
-"Tu es en train de comprendre quelque chose d’important…",
-"Une vérité cachée va se révéler…"
-];
 
-// 🔥 extension automatique vers 50
-while (messages.length < 50) {
-    messages = messages.concat(messages);
-}
+var messages = [
+
+"Tu traverses actuellement une période où plusieurs éléments de ta vie semblent se mélanger, créant une confusion intérieure qui t’empêche de voir clairement la direction à prendre. Ce n’est pas un blocage définitif, mais une phase de réajustement mental et émotionnel.",
+
+"Une situation passée continue d’influencer inconsciemment tes choix actuels. Même si tu penses être passé à autre chose, certaines émotions n’ont pas encore été totalement intégrées, ce qui crée une forme de répétition dans tes expériences.",
+
+"Ce que tu ressens en ce moment n’est pas à ignorer. Il s’agit d’un signal intérieur qui t’indique que quelque chose doit être observé plus attentivement avant de prendre une décision importante.",
+
+"Tu es dans une phase où ton esprit cherche des réponses rapides, mais les véritables réponses demandent du recul et de la patience. Forcer les choses actuellement pourrait créer encore plus de confusion.",
+
+"Il existe en toi une tension entre ce que tu veux consciemment et ce que tu ressens profondément. Cette différence crée une forme d’instabilité intérieure qu’il est important de comprendre plutôt que de combattre.",
+
+"Une personne ou une situation a encore un impact émotionnel sur toi, même si tu essaies de t’en détacher. Cette influence agit de manière subtile sur tes choix récents.",
+
+"Tu es dans une période de transition où certaines anciennes façons de penser ne correspondent plus à la personne que tu deviens. Cela peut créer un sentiment d’incertitude temporaire.",
+
+"Ce que tu vis actuellement n’est pas un hasard. C’est une période de recalibrage intérieur qui te pousse à revoir certaines décisions ou habitudes de vie.",
+
+"Une situation récente agit comme un déclencheur émotionnel. Elle n’est pas là pour te perturber, mais pour te faire prendre conscience d’un schéma répétitif.",
+
+"Tu es en train de quitter progressivement une ancienne version de toi-même, même si ce processus peut sembler inconfortable ou flou par moments.",
+
+"Tu ressens un blocage car ton esprit essaie de contrôler une situation qui demande plutôt de l’observation et du lâcher-prise.",
+
+"Une vérité que tu évites de regarder directement commence à se manifester de plus en plus clairement dans ton quotidien.",
+
+"Tu es dans une phase où ton intuition est plus fiable que ton analyse mentale. Trop réfléchir actuellement peut t’éloigner de la bonne direction.",
+
+"Une opportunité ou un changement est en préparation, mais il nécessite que tu sois plus attentif aux signaux autour de toi.",
+
+"Tu es influencé par des expériences passées qui ne sont pas encore totalement digérées émotionnellement, ce qui peut créer des réactions automatiques dans le présent.",
+
+"Une période de confusion précède souvent une période de clarté. Ce que tu vis est donc une étape normale d’évolution.",
+
+"Tu n’es pas bloqué, tu es en train de réorganiser intérieurement ta perception des choses. Cela demande du temps.",
+
+"Une situation actuelle va évoluer si tu prends du recul et évites de réagir de manière impulsive.",
+
+"Tu es dans une phase où le silence intérieur et l’observation sont plus importants que l’action immédiate.",
+
+"Une réponse que tu cherches viendra plus facilement lorsque tu arrêteras de la forcer mentalement.",
+
+"Tu es plus proche d’une prise de conscience importante que tu ne le réalises actuellement.",
+
+"Un schéma répétitif dans ta vie est en train de se présenter à nouveau pour être compris différemment.",
+
+"Tu es dans un moment où certaines émotions anciennes remontent à la surface pour être libérées.",
+
+"Ce que tu ressens est un indicateur important d’un changement intérieur en cours.",
+
+"Une situation va devenir plus claire dans les jours ou semaines à venir si tu ne précipites pas les choses.",
+
+"Tu es dans une phase où tes décisions doivent être guidées par la clarté intérieure plutôt que par la pression extérieure.",
+
+"Une transformation discrète mais profonde est déjà en cours dans ta manière de penser.",
+
+"Tu dois accepter que certaines réponses ne sont pas encore disponibles pour toi maintenant.",
+
+"Une tension actuelle est le signe qu’un ajustement est nécessaire dans ta vie.",
+
+"Tu es en train de réévaluer inconsciemment ce qui est vraiment important pour toi.",
+
+"Une situation du passé n’a pas encore terminé son impact sur ton présent.",
+
+"Tu es dans une période où la patience devient un élément clé de ton évolution.",
+
+"Une opportunité pourrait apparaître lorsque tu seras plus aligné intérieurement.",
+
+"Tu es dans une phase où tu dois faire confiance à ton processus plutôt qu’à tes peurs.",
+
+"Une clarification arrive progressivement, même si elle n’est pas encore visible totalement.",
+
+"Tu es en train de sortir d’un cycle émotionnel répétitif.",
+
+"Une prise de décision importante sera plus claire après cette phase d’observation.",
+
+"Tu es dans une transition où les anciennes réponses ne fonctionnent plus pour toi.",
+
+"Une nouvelle compréhension de ta situation est en train d’émerger doucement.",
+
+"Tu dois éviter de prendre des décisions basées uniquement sur l’émotion du moment.",
+
+"Une situation va évoluer naturellement si tu la laisses respirer.",
+
+"Tu es dans un processus de réalignement intérieur progressif.",
+
+"Une réponse viendra lorsque tu seras plus calme mentalement.",
+
+"Tu es dans une phase où l’apprentissage principal est de ralentir.",
+
+"Une compréhension plus profonde de ta situation est en train de se former.",
+
+"Tu es guidé vers une meilleure clarté intérieure même si cela n’est pas encore visible.",
+
+"Une étape importante de ton évolution personnelle est en cours.",
+
+"Tu es dans un moment où l’observation est plus puissante que l’action.",
+
+"Une transformation intérieure se prépare silencieusement.",
+
+"Ce que tu vis actuellement est une phase de réajustement nécessaire pour la suite."
+
+];
 
 var random = messages[Math.floor(Math.random() * messages.length)];
 
 document.getElementById("message").innerText = random;
+
 </script>
 
 </body>
