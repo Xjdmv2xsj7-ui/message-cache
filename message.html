@@ -6,23 +6,38 @@
 
 <body style="text-align:center; font-family:Arial; padding:50px; background:#111; color:white;">
 
-    <h1>Voici ton message…</h1>
+<h1>Voici ton message…</h1>
 
-    <p id="message" style="font-size:22px; margin-top:30px;"></p>
+<p id="message" style="font-size:22px; margin-top:30px;"></p>
 
 <script>
 var messages = [
-"Une réponse arrive bientôt dans ta vie…",
-"Quelqu’un pense à toi en silence…",
-"Un changement important est en préparation…",
-"Une personne de ton passé va refaire surface…",
-"Tu es plus proche d’une réponse que tu ne le crois…",
-"Une opportunité inattendue arrive très bientôt…",
-"Ton intuition a raison, fais-lui confiance…",
-"Quelque chose que tu attends va se débloquer…",
-"Ne force pas les choses, laisse venir…",
-"Un signe va apparaître dans les prochains jours…"
+"Une réponse arrive bientôt…",
+"Quelqu’un pense encore à toi…",
+"Un changement important approche…",
+"Tu n’es pas au bon endroit par hasard…",
+"Une décision va tout changer…",
+"Quelque chose se débloque bientôt…",
+"Une personne du passé revient…",
+"Ton intuition est correcte…",
+"Un message important arrive…",
+"Ne doute pas de ce que tu ressens…",
+"Tu es sur le bon chemin…",
+"Une vérité va apparaître…",
+"Ce que tu attends arrive…",
+"Un signe va se montrer…",
+"Ne force pas les choses…",
+"Tu vas comprendre bientôt…",
+"Quelqu’un pense à toi en secret…",
+"Une porte va s’ouvrir…",
+"Tu es protégé dans cette période…",
+"Une opportunité arrive…"
 ];
+
+// 🔥 on duplique pour arriver à ~100 automatiquement
+while (messages.length < 100) {
+    messages = messages.concat(messages);
+}
 
 var random = messages[Math.floor(Math.random() * messages.length)];
 
