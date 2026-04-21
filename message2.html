@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ton Message</title>
+</head>
+
+<body style="text-align:center; font-family:Arial; padding:50px; background:#0f0f0f; color:white;">
+
+<h1>Message détaillé</h1>
+
+<p id="message" style="font-size:20px; margin-top:30px;"></p>
+
+<script>
+var messages = [
+"Tu traverses une période de transition importante…",
+"Une décision que tu repousses doit être prise…",
+"Ce que tu ressens est un signal intérieur fort…",
+"Une situation va évoluer rapidement…",
+"Quelqu’un influence encore ton énergie…",
+"Tu dois faire confiance à ton instinct…",
+"Un changement professionnel ou personnel arrive…",
+"Une réponse émotionnelle va apparaître bientôt…",
+"Tu es en train de comprendre quelque chose d’important…",
+"Une vérité cachée va se révéler…"
+];
+
+// 🔥 extension automatique vers 50
+while (messages.length < 50) {
+    messages = messages.concat(messages);
+}
+
+var random = messages[Math.floor(Math.random() * messages.length)];
+
+document.getElementById("message").innerText = random;
+</script>
+
+</body>
+</html>
