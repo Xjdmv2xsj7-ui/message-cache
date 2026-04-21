@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guidance complète</title>
+</head>
+
+<body style="text-align:center; font-family:Arial; padding:50px; background:#0a0a0a; color:white;">
+
+<h1>Guidance complète</h1>
+
+<p id="message" style="font-size:16px; margin-top:40px; line-height:1.8; max-width:800px; margin-left:auto; margin-right:auto;"></p>
+
+<script>
+
+var messages = [
+
+`Tu es actuellement dans une phase de transformation profonde de ta vie.<br>
+Certaines structures internes et externes ne correspondent plus à la personne que tu deviens.<br>
+Ce décalage crée une sensation d’instabilité temporaire.<br>
+Mais il ne s’agit pas d’un blocage, plutôt d’un réalignement nécessaire.<br>
+Tu es en train de quitter une ancienne version de toi-même.<br>
+Ce processus peut sembler flou ou inconfortable.<br>
+Mais il est essentiel pour ton évolution.<br>
+Tu dois éviter de forcer les décisions maintenant.<br>
+La clarté viendra progressivement.<br>
+Une nouvelle direction se prépare déjà.`,
+
+`Tu arrives à un point de ton parcours où certaines réponses ne peuvent plus venir de la logique seule.<br>
+Ton esprit cherche à comprendre rapidement, mais la situation demande du recul.<br>
+Tu es influencé par des expériences passées non encore totalement intégrées.<br>
+Cela crée des réactions émotionnelles automatiques.<br>
+Une situation actuelle agit comme un miroir de ces schémas.<br>
+Tu es invité à observer plutôt qu’à agir dans la précipitation.<br>
+Une évolution intérieure est en cours.<br>
+Elle ne se voit pas encore clairement, mais elle est active.<br>
+Tu es dans une transition importante.<br>
+Et cette transition va redéfinir ta perception des choses.`,
+
+`Tu es dans une période où ton intuition est plus importante que ton analyse mentale.<br>
+Plus tu forces les réponses, plus elles semblent se déplacer.<br>
+Ce que tu vis actuellement est une phase de réajustement intérieur.<br>
+Une situation ou une relation influence encore ton équilibre émotionnel.<br>
+Ce lien doit être compris avant d’être totalement dépassé.<br>
+Tu n’es pas bloqué, tu es en train de comprendre progressivement.<br>
+Une vérité intérieure commence à émerger.<br>
+Mais elle demande du silence et de l’observation.<br>
+Une opportunité de clarté arrive bientôt.<br>
+Si tu ralentis, tu la verras plus facilement.`,
+
+`Une étape importante de ton évolution est en cours.<br>
+Tu peux ressentir une forme de fatigue mentale ou émotionnelle.<br>
+Cela vient du fait que tu changes de niveau intérieur.<br>
+Ce n’est pas une perte de direction mais une transition.<br>
+Certaines réponses que tu attends ne sont pas encore disponibles.<br>
+Parce qu’elles nécessitent un changement de perception.<br>
+Tu es en train de te détacher progressivement d’un ancien schéma.<br>
+Cela peut créer une sensation d’incertitude temporaire.<br>
+Mais cette phase est nécessaire.<br>
+Elle prépare une compréhension plus profonde.`,
+
+`Tu es dans une phase où certaines émotions anciennes remontent.<br>
+Elles ne sont pas là pour te perturber mais pour être comprises.<br>
+Une situation actuelle réactive un ancien schéma intérieur.<br>
+Ce schéma influence encore tes choix inconsciemment.<br>
+Tu dois observer ce qui se répète dans ta vie.<br>
+Car cela contient une information importante pour toi.<br>
+Une prise de conscience est proche.<br>
+Elle viendra quand tu arrêteras de forcer les choses.<br>
+Tu es dans un processus de libération intérieure.<br>
+Et ce processus est déjà en cours.`
+
+];
+
+// 🔥 amélioration automatique pour avoir 50 messages
+while (messages.length < 50) {
+    messages = messages.concat(messages);
+}
+
+// sélection aléatoire
+var random = messages[Math.floor(Math.random() * messages.length)];
+
+document.getElementById("message").innerHTML = random;
+
+</script>
+
+</body>
+</html>
