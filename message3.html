@@ -44,7 +44,7 @@
             background: rgba(15, 15, 15, 0.98);
             border: 2px solid gold; 
             padding: 50px 35px;
-            border-radius: 30px; /* Bords bien arrondis */
+            border-radius: 30px;
             box-shadow: 0 0 60px rgba(218, 165, 32, 0.2);
             text-align: center;
             line-height: 2;
@@ -67,6 +67,14 @@
             text-transform: uppercase;
         }
         button:hover { filter: brightness(1.2); transform: translateY(-3px); }
+
+        .btn-home {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            margin-top: 20px;
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
@@ -78,7 +86,7 @@
     <div class="container">
         <div id="start-screen" onclick="lancerRoyale()">
             <div class="crown-icon">👑</div>
-            <p style="font-family: 'Cinzel'; color: gold; letter-spacing: 2px;">RECEVOIR MA<br>GUIDANCE ROYALE</p>
+            <p id="start-text" style="font-family: 'Cinzel'; color: gold; letter-spacing: 2px;">RECEVOIR MA<br>GUIDANCE ROYALE</p>
         </div>
 
         <div id="loading-screen">
@@ -90,6 +98,7 @@
             <h2 style="font-family: 'Cinzel'; color: gold; margin-top: 0; letter-spacing: 2px;">Ta Guidance Complète</h2>
             <div id="text-container" style="color: white; font-style: italic;"></div>
             <button onclick="window.print()">Conserver mon parchemin</button>
+            <button class="btn-home" onclick="resetAndHome()">Retourner à l'accueil</button>
         </div>
     </div>
 
@@ -106,36 +115,66 @@
             `Tu es dans une phase où certaines émotions anciennes remontent.<br>Elles ne sont pas là pour te perturber mais pour être comprises.<br>Une situation actuelle réactive un ancien schéma intérieur.<br>Ce schéma influence encore tes choix inconsciemment.<br>Tu dois observer ce qui se répète dans ta vie.<br>Car cela contient une information importante pour toi.<br>Une prise de conscience est proche.<br>Elle viendra quand tu arrêteras de la forcer les choses.<br>Tu es dans un processus de libération intérieure.<br>Et ce processus est déjà en cours.`
         ];
 
+        const storageKey = "guidance_royale_saved";
+        const savedMessage = localStorage.getItem(storageKey);
+
+        // Vérification au chargement
+        window.onload = function() {
+            if (savedMessage) {
+                document.getElementById("start-text").innerHTML = "REVOIR MA<br>GUIDANCE ROYALE";
+            }
+        };
+
         function lancerRoyale() {
             document.getElementById("royalSound").play();
             document.getElementById("start-screen").style.display = "none";
             document.getElementById("loading-screen").style.display = "block";
             
-            setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
-            setTimeout(afficherResultat, 6000); // 6 secondes pour le premium
+            if (savedMessage) {
+                // Chargement plus rapide si déjà en mémoire
+                document.getElementById("status").innerText = "Réouverture du parchemin...";
+                document.getElementById("bar").style.transition = "2s linear"; 
+                setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
+                setTimeout(() => { afficherResultat(savedMessage); }, 2200);
+            } else {
+                // Nouveau tirage premium (6 secondes)
+                setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
+                setTimeout(genererNouveauResultat, 6000);
+            }
         }
 
-        function afficherResultat() {
+        function genererNouveauResultat() {
+            const texteFinal = messages[Math.floor(Math.random() * messages.length)];
+            localStorage.setItem(storageKey, texteFinal);
+            afficherResultat(texteFinal);
+        }
+
+        function afficherResultat(texte) {
             document.getElementById("loading-screen").style.display = "none";
             document.getElementById("result").style.display = "block";
 
-            const texteFinal = messages[Math.floor(Math.random() * messages.length)];
-            
             let i = 0;
             const container = document.getElementById("text-container");
+            container.innerHTML = "";
+
             function typewriter() {
-                if (i < texteFinal.length) {
-                    if (texteFinal.substr(i, 4) === "<br>") {
+                if (i < texte.length) {
+                    if (texte.substr(i, 4) === "<br>") {
                         container.innerHTML += "<br>";
                         i += 4;
                     } else {
-                        container.innerHTML += texteFinal.charAt(i);
+                        container.innerHTML += texte.charAt(i);
                         i++;
                     }
-                    setTimeout(typewriter, 40);
+                    setTimeout(typewriter, 35);
                 }
             }
             typewriter();
+        }
+
+        function resetAndHome() {
+            localStorage.removeItem(storageKey);
+            window.location.href = "https://xjdmv2xsj7-ui.github.io/message-cache/";
         }
     </script>
 </body>
