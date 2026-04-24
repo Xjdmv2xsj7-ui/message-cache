@@ -76,10 +76,12 @@
             background: rgba(255,255,255,0.05);
         }
 
-        .btn-reset {
-            border-color: rgba(255, 255, 255, 0.1);
-            font-size: 0.7em;
-            opacity: 0.6;
+        .btn-home {
+            border-color: #d4af37; /* Couleur Or pour rappeler ton logo */
+            color: #d4af37;
+            margin-top: 30px;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -100,7 +102,7 @@
             
             <button onclick="window.print()">Capture d'écran / Imprimer</button>
             <br>
-            <button class="btn-reset" onclick="resetGuidance()">Recevoir un autre message</button>
+            <button class="btn-home" onclick="resetAndHome()">Retourner à l'accueil</button>
         </div>
     </div>
 
@@ -135,6 +137,7 @@
             "Finalisation de la guidance..."
         ];
 
+        // --- MÉMOIRE LOCALE ---
         const storageKey = "guidance_flash_saved";
         const savedMessage = localStorage.getItem(storageKey);
 
@@ -167,10 +170,10 @@
             document.getElementById("result").style.display = "block";
         }
 
-        // Fonction pour effacer la mémoire et recharger
-        function resetGuidance() {
+        // --- FONCTION DE RETOUR À L'ACCUEIL ---
+        function resetAndHome() {
             localStorage.removeItem(storageKey);
-            location.reload();
+            window.location.href = "https://xjdmv2xsj7-ui.github.io/message-cache/";
         }
     </script>
 
