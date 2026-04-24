@@ -1,87 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Guidance complète</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guidance Royale - Ton Message Caché</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: radial-gradient(circle at center, #1b1101 0%, #000000 100%);
+            color: #f4e4bc;
+            font-family: 'Lora', serif;
+            text-align: center;
+            padding: 40px 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { max-width: 800px; width: 100%; }
+
+        h1 { font-family: 'Cinzel', serif; color: gold; font-size: 2em; letter-spacing: 4px; margin-bottom: 50px; text-transform: uppercase; }
+
+        /* Écran de départ pour le SON */
+        #start-screen { 
+            margin-top: 50px; 
+            padding: 40px; 
+            border: 2px solid gold; 
+            border-radius: 50%; 
+            width: 250px; height: 250px; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            cursor: pointer; transition: 0.5s; margin: 50px auto;
+            background: rgba(218, 165, 32, 0.05);
+        }
+        #start-screen:hover { box-shadow: 0 0 50px rgba(218, 165, 32, 0.3); transform: scale(1.05); }
+
+        .crown-icon { font-size: 4em; filter: drop-shadow(0 0 10px gold); margin-bottom: 15px; }
+
+        /* Fenêtre de résultat arrondie */
+        #result {
+            display: none;
+            background: rgba(15, 15, 15, 0.98);
+            border: 2px solid gold; 
+            padding: 50px 35px;
+            border-radius: 30px; /* Bords bien arrondis */
+            box-shadow: 0 0 60px rgba(218, 165, 32, 0.2);
+            text-align: center;
+            line-height: 2;
+            font-size: 1.15em;
+            animation: slideUp 1.5s ease;
+        }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        #loading-screen { display: none; margin-top: 100px; }
+        .progress-bar { width: 100%; height: 2px; background: rgba(255,215,0,0.1); margin-top: 25px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: gold; box-shadow: 0 0 15px gold; transition: 6s linear; }
+
+        button { 
+            background: linear-gradient(45deg, #ffd700, #b8860b); 
+            color: black; border: none; padding: 18px 40px; 
+            font-family: 'Cinzel'; font-weight: bold; 
+            border-radius: 50px; margin-top: 40px; 
+            cursor: pointer; width: 100%; transition: 0.3s;
+            text-transform: uppercase;
+        }
+        button:hover { filter: brightness(1.2); transform: translateY(-3px); }
+    </style>
 </head>
+<body>
 
-<body style="text-align:center; font-family:Arial; padding:50px; background:#0a0a0a; color:white;">
+    <audio id="royalSound">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
 
-<h1>Guidance complète</h1>
+    <div class="container">
+        <div id="start-screen" onclick="lancerRoyale()">
+            <div class="crown-icon">👑</div>
+            <p style="font-family: 'Cinzel'; color: gold; letter-spacing: 2px;">RECEVOIR MA<br>GUIDANCE ROYALE</p>
+        </div>
 
-<p id="message" style="font-size:16px; margin-top:40px; line-height:1.8; max-width:800px; margin-left:auto; margin-right:auto;"></p>
+        <div id="loading-screen">
+            <h2 id="status" style="font-family: 'Cinzel'; color: gold;">Ouverture du canal divin...</h2>
+            <div class="progress-bar"><div id="bar" class="progress-fill"></div></div>
+        </div>
 
-<script>
+        <div id="result">
+            <h2 style="font-family: 'Cinzel'; color: gold; margin-top: 0; letter-spacing: 2px;">Ta Guidance Complète</h2>
+            <div id="text-container" style="color: white; font-style: italic;"></div>
+            <button onclick="window.print()">Conserver mon parchemin</button>
+        </div>
+    </div>
 
-var messages = [
+    <script>
+        const messages = [
+            `Tu es actuellement dans une phase de transformation profonde de ta vie.<br>Certaines structures internes et externes ne correspondent plus à la personne que tu deviens.<br>Ce décalage crée une sensation d’instabilité temporaire.<br>Mais il ne s’agit pas d’un blocage, plutôt d’un réalignement nécessaire.<br>Tu es en train de quitter une ancienne version de toi-même.<br>Ce processus peut sembler flou ou inconfortable.<br>Mais il est essentiel pour ton évolution.<br>Tu dois éviter de forcer les décisions maintenant.<br>La clarté viendra progressivement.<br>Une nouvelle direction se prépare déjà.`,
+            
+            `Tu arrives à un point de ton parcours où certaines réponses ne peuvent plus venir de la logique seule.<br>Ton esprit cherche à comprendre rapidement, mais la situation demande du recul.<br>Tu es influencé par des expériences passées non encore totalement intégrées.<br>Cela crée des réactions émotionnelles automatiques.<br>Une situation actuelle agit comme un miroir de ces schémas.<br>Tu es invité à observer plutôt qu’à agir dans la précipitation.<br>Une évolution intérieure est en cours.<br>Elle ne se voit pas encore clairement, mais elle est active.<br>Tu es dans une transition importante.<br>Et cette transition va redéfinir ta perception des choses.`,
 
-`Tu es actuellement dans une phase de transformation profonde de ta vie.<br>
-Certaines structures internes et externes ne correspondent plus à la personne que tu deviens.<br>
-Ce décalage crée une sensation d’instabilité temporaire.<br>
-Mais il ne s’agit pas d’un blocage, plutôt d’un réalignement nécessaire.<br>
-Tu es en train de quitter une ancienne version de toi-même.<br>
-Ce processus peut sembler flou ou inconfortable.<br>
-Mais il est essentiel pour ton évolution.<br>
-Tu dois éviter de forcer les décisions maintenant.<br>
-La clarté viendra progressivement.<br>
-Une nouvelle direction se prépare déjà.`,
+            `Tu es dans une période où ton intuition est plus importante que ton analyse mentale.<br>Plus tu forces les réponses, plus elles semblent se déplacer.<br>Ce que tu vis actuellement est une phase de réajustement intérieur.<br>Une situation ou une relation influence encore ton équilibre émotionnel.<br>Ce lien doit être compris avant d’être totalement dépassé.<br>Tu n’es pas bloqué, tu es en train de comprendre progressivement.<br>Une vérité intérieure commence à émerger.<br>Mais elle demande du silence et de l’observation.<br>Une opportunité de clarté arrive bientôt.<br>Si tu ralentis, tu la verras plus facilement.`,
 
-`Tu arrives à un point de ton parcours où certaines réponses ne peuvent plus venir de la logique seule.<br>
-Ton esprit cherche à comprendre rapidement, mais la situation demande du recul.<br>
-Tu es influencé par des expériences passées non encore totalement intégrées.<br>
-Cela crée des réactions émotionnelles automatiques.<br>
-Une situation actuelle agit comme un miroir de ces schémas.<br>
-Tu es invité à observer plutôt qu’à agir dans la précipitation.<br>
-Une évolution intérieure est en cours.<br>
-Elle ne se voit pas encore clairement, mais elle est active.<br>
-Tu es dans une transition importante.<br>
-Et cette transition va redéfinir ta perception des choses.`,
+            `Une étape importante de ton évolution est en cours.<br>Tu peux ressentir une forme de fatigue mentale ou émotionnelle.<br>Cela vient du fait que tu changes de niveau intérieur.<br>Ce n’est pas une perte de direction mais une transition.<br>Certaines réponses que tu attends ne sont pas encore disponibles.<br>Parce qu’elles nécessitent un changement de perception.<br>Tu es en train de te détacher progressivement d’un ancien schéma.<br>Cela peut créer une sensation d’incertitude temporaire.<br>Mais cette phase est nécessaire.<br>Elle prépare une compréhension plus profonde.`,
 
-`Tu es dans une période où ton intuition est plus importante que ton analyse mentale.<br>
-Plus tu forces les réponses, plus elles semblent se déplacer.<br>
-Ce que tu vis actuellement est une phase de réajustement intérieur.<br>
-Une situation ou une relation influence encore ton équilibre émotionnel.<br>
-Ce lien doit être compris avant d’être totalement dépassé.<br>
-Tu n’es pas bloqué, tu es en train de comprendre progressivement.<br>
-Une vérité intérieure commence à émerger.<br>
-Mais elle demande du silence et de l’observation.<br>
-Une opportunité de clarté arrive bientôt.<br>
-Si tu ralentis, tu la verras plus facilement.`,
+            `Tu es dans une phase où certaines émotions anciennes remontent.<br>Elles ne sont pas là pour te perturber mais pour être comprises.<br>Une situation actuelle réactive un ancien schéma intérieur.<br>Ce schéma influence encore tes choix inconsciemment.<br>Tu dois observer ce qui se répète dans ta vie.<br>Car cela contient une information importante pour toi.<br>Une prise de conscience est proche.<br>Elle viendra quand tu arrêteras de la forcer les choses.<br>Tu es dans un processus de libération intérieure.<br>Et ce processus est déjà en cours.`
+        ];
 
-`Une étape importante de ton évolution est en cours.<br>
-Tu peux ressentir une forme de fatigue mentale ou émotionnelle.<br>
-Cela vient du fait que tu changes de niveau intérieur.<br>
-Ce n’est pas une perte de direction mais une transition.<br>
-Certaines réponses que tu attends ne sont pas encore disponibles.<br>
-Parce qu’elles nécessitent un changement de perception.<br>
-Tu es en train de te détacher progressivement d’un ancien schéma.<br>
-Cela peut créer une sensation d’incertitude temporaire.<br>
-Mais cette phase est nécessaire.<br>
-Elle prépare une compréhension plus profonde.`,
+        function lancerRoyale() {
+            document.getElementById("royalSound").play();
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("loading-screen").style.display = "block";
+            
+            setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
+            setTimeout(afficherResultat, 6000); // 6 secondes pour le premium
+        }
 
-`Tu es dans une phase où certaines émotions anciennes remontent.<br>
-Elles ne sont pas là pour te perturber mais pour être comprises.<br>
-Une situation actuelle réactive un ancien schéma intérieur.<br>
-Ce schéma influence encore tes choix inconsciemment.<br>
-Tu dois observer ce qui se répète dans ta vie.<br>
-Car cela contient une information importante pour toi.<br>
-Une prise de conscience est proche.<br>
-Elle viendra quand tu arrêteras de forcer les choses.<br>
-Tu es dans un processus de libération intérieure.<br>
-Et ce processus est déjà en cours.`
+        function afficherResultat() {
+            document.getElementById("loading-screen").style.display = "none";
+            document.getElementById("result").style.display = "block";
 
-];
-
-// 🔥 amélioration automatique pour avoir 50 messages
-while (messages.length < 50) {
-    messages = messages.concat(messages);
-}
-
-// sélection aléatoire
-var random = messages[Math.floor(Math.random() * messages.length)];
-
-document.getElementById("message").innerHTML = random;
-
-</script>
-
+            const texteFinal = messages[Math.floor(Math.random() * messages.length)];
+            
+            let i = 0;
+            const container = document.getElementById("text-container");
+            function typewriter() {
+                if (i < texteFinal.length) {
+                    if (texteFinal.substr(i, 4) === "<br>") {
+                        container.innerHTML += "<br>";
+                        i += 4;
+                    } else {
+                        container.innerHTML += texteFinal.charAt(i);
+                        i++;
+                    }
+                    setTimeout(typewriter, 40);
+                }
+            }
+            typewriter();
+        }
+    </script>
 </body>
 </html>
