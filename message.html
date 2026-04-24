@@ -1,48 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Ton Message</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ta Guidance - Ton Message Caché</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            color: #e0e0e0;
+            font-family: 'Lora', serif;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80vh;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        h1 { font-family: 'Cinzel', serif; font-size: 1.8em; letter-spacing: 2px; color: #fff; margin-bottom: 30px; }
+
+        /* Style du chargeur */
+        #loader { display: block; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        #loading-text { font-style: italic; font-size: 0.9em; color: #aaa; }
+
+        /* Style du message final */
+        #result {
+            display: none; /* Caché au début */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        #message {
+            font-size: 24px;
+            line-height: 1.6;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .crystal-ball { font-size: 3em; margin-bottom: 20px; display: block; }
+
+        button {
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-top: 20px;
+        }
+    </style>
 </head>
+<body>
 
-<body style="text-align:center; font-family:Arial; padding:50px; background:#111; color:white;">
+    <div class="container">
+        <div id="loader">
+            <span class="crystal-ball">🔮</span>
+            <div class="spinner"></div>
+            <p id="loading-text">Interrogation des énergies...</p>
+        </div>
 
-<h1>Voici ton message…</h1>
+        <div id="result">
+            <span class="crystal-ball">✨</span>
+            <h1>Ton Message</h1>
+            <p id="message"></p>
+            <p style="font-size: 0.8em; opacity: 0.5;">Ceci est une guidance flash pour ton moment présent.</p>
+            <button onclick="window.print()">Capture d'écran / Imprimer</button>
+        </div>
+    </div>
 
-<p id="message" style="font-size:22px; margin-top:30px;"></p>
+    <script>
+        var messages = [
+            "Une opportunité inattendue va se présenter dans les prochains jours. Reste attentif aux signes.",
+            "Quelqu’un de ton entourage pense à toi en ce moment avec beaucoup de bienveillance.",
+            "Un changement important approche. Ne le redoute pas, il est nécessaire pour ton évolution.",
+            "Ton intuition actuelle est ton meilleur guide. Fais-toi confiance, tu connais déjà la réponse.",
+            "Une décision que tu as prise récemment va porter ses fruits plus vite que prévu.",
+            "Quelque chose qui semblait bloqué va se libérer brusquement. Prépare-toi à agir.",
+            "Une personne du passé pourrait revenir avec un message ou une explication importante.",
+            "Prends le temps de te reposer aujourd'hui. L'univers travaille pour toi dans le silence.",
+            "Un message important arrive par un canal inhabituel. Ouvre l'œil sur tes rêves ou tes rencontres.",
+            "Ne doute plus de ta valeur. Le chemin sur lequel tu es est exactement celui qu'il te faut.",
+            "La vérité sur une situation floue va éclater d'ici peu. Tu y verras enfin clair.",
+            "Ce que tu attends avec impatience est en route. Le timing divin est à l'œuvre.",
+            "Un signe répétitif (chiffres, noms, musiques) va se montrer à toi. Note-le bien.",
+            "Ne force pas les choses en ce moment. Lâche prise et laisse la situation respirer.",
+            "Tu vas comprendre très bientôt pourquoi certains obstacles étaient sur ta route.",
+            "Une porte va s’ouvrir là où tu pensais qu'il n'y avait qu'un mur.",
+            "Tu es protégé(e) dans cette période de transition. Avance sans crainte.",
+            "Une rentrée d'argent ou une nouvelle positive concernant tes projets arrive.",
+            "Fais le tri autour de toi. En libérant de l'espace, tu appelles de nouvelles énergies.",
+            "La réponse à ta question est OUI, mais pas de la manière dont tu l'imagines."
+        ];
 
-<script>
-var messages = [
-"Une réponse arrive bientôt…",
-"Quelqu’un pense encore à toi…",
-"Un changement important approche…",
-"Tu n’es pas au bon endroit par hasard…",
-"Une décision va tout changer…",
-"Quelque chose se débloque bientôt…",
-"Une personne du passé revient…",
-"Ton intuition est correcte…",
-"Un message important arrive…",
-"Ne doute pas de ce que tu ressens…",
-"Tu es sur le bon chemin…",
-"Une vérité va apparaître…",
-"Ce que tu attends arrive…",
-"Un signe va se montrer…",
-"Ne force pas les choses…",
-"Tu vas comprendre bientôt…",
-"Quelqu’un pense à toi en secret…",
-"Une porte va s’ouvrir…",
-"Tu es protégé dans cette période…",
-"Une opportunité arrive…"
-];
+        // Simulation du chargement
+        const loadingSteps = [
+            "Connexion à tes énergies...",
+            "Mélange des arcanes...",
+            "Lecture du message caché...",
+            "Finalisation de la guidance..."
+        ];
 
-// 🔥 on duplique pour arriver à ~100 automatiquement
-while (messages.length < 100) {
-    messages = messages.concat(messages);
-}
+        let step = 0;
+        const loadingInterval = setInterval(() => {
+            document.getElementById("loading-text").innerText = loadingSteps[step];
+            step++;
+            if (step >= loadingSteps.length) {
+                clearInterval(loadingInterval);
+                revealMessage();
+            }
+        }, 1200);
 
-var random = messages[Math.floor(Math.random() * messages.length)];
+        function revealMessage() {
+            // Tirage au sort
+            var random = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("message").innerText = random;
 
-document.getElementById("message").innerText = random;
-</script>
+            // Bascule visuelle
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("result").style.display = "block";
+        }
+    </script>
 
 </body>
 </html>
