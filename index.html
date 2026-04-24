@@ -1,55 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Découvre ton message</title>
-</head>
-
-<body style="text-align:center; font-family:Arial; padding:50px; background:#000; color:white;">
-
-<h1>Découvre ton message</h1>
-
-<p style="margin-top:20px; font-size:18px;">
-Choisis le niveau de guidance que tu souhaites recevoir
-</p>
-
-<!-- OFFRE 1 -->
-<div style="margin-top:50px;">
-    <h2>💰 Message rapide</h2>
-    <p>Une réponse courte et directe</p>
-    <a href="https://buy.stripe.com/8x24gBfcP4mR4FigZl3VC00">
-        <button style="padding:15px 30px; font-size:16px;">
-            Accéder - 4,99€
-        </button>
-    </a>
-</div>
-
-<!-- OFFRE 2 -->
-<div style="margin-top:50px;">
-    <h2>✨ Message détaillé</h2>
-    <p>Une analyse plus profonde de ta situation</p>
-    <a href="https://buy.stripe.com/9B614pggT9Hb4Fi10n3VC01">
-        <button style="padding:15px 30px; font-size:16px;">
-            Accéder - 9,99€
-        </button>
-    </a>
-</div>
-
-<!-- OFFRE 3 -->
-<div style="margin-top:60px;">
-    <h2>💫 Guidance complète</h2>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ton Message Caché - Cartomancie & Guidance</title>
     
-    <p style="color:gold; font-weight:bold; font-size:18px;">
-        ⭐ Le plus complet
-    </p>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 
-    <p>Une lecture complète et structurée</p>
+    <style>
+        body {
+            /* Fond dégradé subtil pour rappeler la nuit étoilée */
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            color: #e0e0e0;
+            /* Police principale plus lisible */
+            font-family: 'Lora', serif;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+        }
 
-    <a href="https://buy.stripe.com/eVq9AVd4Hg5z8Vy9wT3VC02">
-        <button style="padding:18px 35px; font-size:18px; background:gold; color:black; border:none; border-radius:5px;">
-            Accéder - 14,99€
-        </button>
-    </a>
-</div>
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            /* Police Titre Mystique */
+            font-family: 'Cinzel', serif;
+            font-size: 2.8em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 1.1em;
+            margin-bottom: 60px;
+        }
+
+        /* Style des encadrés d'offre */
+        .offre-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Effet au survol des cartes */
+        .offre-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Style des icônes/symboles */
+        .icon-symbol {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+            opacity: 0.7;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        .description {
+            font-size: 1em;
+            margin-bottom: 25px;
+            color: #b0b0b0;
+        }
+
+        /* Style de base des boutons */
+        button {
+            cursor: pointer;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+        }
+
+        /* Effet au survol des boutons */
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+            background: #f0f0f0;
+        }
+
+        /* Spécificités pour la carte OR */
+        .gold-card {
+            border: 1px solid gold;
+            background: rgba(218, 165, 32, 0.05);
+        }
+        
+        .gold-card:hover {
+            border-color: #ffeb3b;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.2);
+        }
+
+        .recommande-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: gold;
+            font-weight: bold;
+            font-size: 0.9em;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Bouton doré */
+        .gold-button {
+            background: linear-gradient(45deg, #ffd700, #ffae00);
+            color: #000000;
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+        }
+
+        .gold-button:hover {
+            background: linear-gradient(45deg, #ffeb3b, #ffd700);
+            box-shadow: 0 6px 25px rgba(218, 165, 32, 0.5);
+        }
+
+        /* Adaptation mobile */
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .offre-card { padding: 25px; }
+            button { width: 100%; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ton Message Caché</h1>
+        <p class="subtitle">Découvre ce que l'univers tente de te dire...</p>
+
+        <div class="offre-card">
+            <span class="icon-symbol">⚡</span>
+            <h2>Message rapide</h2>
+            <p class="description">Une réponse courte, claire et directe à ta situation actuelle.</p>
+            <a href="https://buy.stripe.com/8x24gBfcP4mR4FigZl3VC00">
+                <button>Accéder - 4,99€</button>
+            </a>
+        </div>
+
+        <div class="offre-card">
+            <span class="icon-symbol">🔮</span>
+            <h2>Message détaillé</h2>
+            <p class="description">Une analyse plus profonde des énergies qui t'entourent.</p>
+            <a href="https://buy.stripe.com/9B614pggT9Hb4Fi10n3VC01">
+                <button>Accéder - 9,99€</button>
+            </a>
+        </div>
+
+        <div class="offre-card gold-card">
+            <span class="recommande-badge">⭐ Recommandé</span>
+            <span class="icon-symbol">👑</span>
+            <h2>Guidance complète</h2>
+            <p class="description">La lecture la plus riche : structurée, éclairante et complète.</p>
+            <a href="https://buy.stripe.com/eVq9AVd4Hg5z8Vy9wT3VC02">
+                <button class="gold-button">Accéder - 14,99€</button>
+            </a>
+        </div>
+    </div>
 
 </body>
 </html>
