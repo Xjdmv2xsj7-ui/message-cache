@@ -51,7 +51,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 2px solid gold; 
             padding: 50px 30px;
-            border-radius: 20px; /* BORDURE ARRONDIE ICI */
+            border-radius: 20px;
             box-shadow: 0 0 40px rgba(218, 165, 32, 0.2);
             text-align: justify;
             line-height: 1.8;
@@ -70,13 +70,21 @@
             padding: 15px 30px; 
             font-family: 'Cinzel'; 
             font-weight: bold; 
-            border-radius: 50px; /* Bouton arrondi aussi */
-            margin-top: 30px; 
+            border-radius: 50px; 
+            margin-top: 20px; 
             cursor: pointer; 
             width: 100%; 
             transition: 0.3s;
         }
         button:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        .btn-home {
+            background: transparent;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            color: gold;
+            font-size: 0.8em;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +96,7 @@
     <div class="container">
         <div id="start-screen" onclick="lancerGuidance()">
             <div class="orb-glow"></div>
-            <p style="font-family: 'Cinzel'; font-size: 0.8em; margin-top: 20px; color: gold;">ACTIVER MON<br>ANALYSE</p>
+            <p id="start-text" style="font-family: 'Cinzel'; font-size: 0.8em; margin-top: 20px; color: gold;">ACTIVER MON<br>ANALYSE</p>
         </div>
 
         <div id="loading-screen">
@@ -102,6 +110,7 @@
             <h2 style="font-family: 'Cinzel'; color: gold; text-align: center; margin-top: 0;">Ta Guidance Détaillée</h2>
             <div id="text-container"></div>
             <button onclick="window.print()">Sauvegarder mon message</button>
+            <button class="btn-home" onclick="resetAndHome()">Retourner à l'accueil</button>
         </div>
     </div>
 
@@ -117,40 +126,75 @@
             "La réponse que tu cherches viendra plus facilement lorsque tu arrêteras de la forcer mentalement. Tu es plus proche d'une prise de conscience importante que tu ne le réalises."
         ];
 
+        const storageKey = "guidance_detaillee_saved";
+        const savedMessage = localStorage.getItem(storageKey);
+
+        // Au chargement, on vérifie si on a déjà un message enregistré
+        window.onload = function() {
+            if (savedMessage) {
+                // On modifie le bouton de départ pour indiquer la récupération
+                document.getElementById("start-text").innerHTML = "VOIR MA<br>GUIDANCE";
+            }
+        };
+
         function lancerGuidance() {
             const son = document.getElementById("audioPlayer");
             son.play();
+            
             document.getElementById("start-screen").style.display = "none";
-            document.getElementById("loading-screen").style.display = "block";
-            setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
-            setTimeout(afficherResultat, 5000);
+
+            if (savedMessage) {
+                // Si message enregistré, on l'affiche plus vite
+                document.getElementById("loading-screen").style.display = "block";
+                document.getElementById("status").innerText = "Récupération de tes énergies...";
+                setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
+                setTimeout(() => {
+                    afficherResultat(savedMessage);
+                }, 2000);
+            } else {
+                // Nouveau tirage
+                document.getElementById("loading-screen").style.display = "block";
+                setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
+                setTimeout(genererNouveauResultat, 5000);
+            }
         }
 
-        function afficherResultat() {
-            document.getElementById("loading-screen").style.display = "none";
-            document.getElementById("result").style.display = "block";
-
+        function genererNouveauResultat() {
             let m1 = mesMessages[Math.floor(Math.random() * mesMessages.length)];
             let m2 = mesMessages[Math.floor(Math.random() * mesMessages.length)];
             while(m1 === m2) { m2 = mesMessages[Math.floor(Math.random() * mesMessages.length)]; }
 
             const texteFinal = m1 + "<br><br>" + m2;
-            
+            localStorage.setItem(storageKey, texteFinal);
+            afficherResultat(texteFinal);
+        }
+
+        function afficherResultat(texte) {
+            document.getElementById("loading-screen").style.display = "none";
+            document.getElementById("result").style.display = "block";
+
             let i = 0;
             const container = document.getElementById("text-container");
+            container.innerHTML = ""; // On vide au cas où
+
             function typewriter() {
-                if (i < texteFinal.length) {
-                    if (texteFinal.substr(i, 4) === "<br>") {
+                if (i < texte.length) {
+                    if (texte.substr(i, 4) === "<br>") {
                         container.innerHTML += "<br>";
                         i += 4;
                     } else {
-                        container.innerHTML += texteFinal.charAt(i);
+                        container.innerHTML += texte.charAt(i);
                         i++;
                     }
-                    setTimeout(typewriter, 30);
+                    setTimeout(typewriter, 25);
                 }
             }
             typewriter();
+        }
+
+        function resetAndHome() {
+            localStorage.removeItem(storageKey);
+            window.location.href = "https://xjdmv2xsj7-ui.github.io/message-cache/";
         }
     </script>
 </body>
