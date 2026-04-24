@@ -23,7 +23,6 @@
 
         h1 { font-family: 'Cinzel', serif; font-size: 1.8em; letter-spacing: 2px; color: #fff; margin-bottom: 30px; }
 
-        /* Style du chargeur */
         #loader { display: block; }
         .spinner {
             width: 50px;
@@ -38,9 +37,8 @@
         
         #loading-text { font-style: italic; font-size: 0.9em; color: #aaa; }
 
-        /* Style du message final */
         #result {
-            display: none; /* Caché au début */
+            display: none;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 40px;
@@ -68,7 +66,20 @@
             border-radius: 50px;
             cursor: pointer;
             font-size: 0.8em;
-            margin-top: 20px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn-reset {
+            border-color: rgba(255, 255, 255, 0.1);
+            font-size: 0.7em;
+            opacity: 0.6;
         }
     </style>
 </head>
@@ -86,7 +97,10 @@
             <h1>Ton Message</h1>
             <p id="message"></p>
             <p style="font-size: 0.8em; opacity: 0.5;">Ceci est une guidance flash pour ton moment présent.</p>
+            
             <button onclick="window.print()">Capture d'écran / Imprimer</button>
+            <br>
+            <button class="btn-reset" onclick="resetGuidance()">Recevoir un autre message</button>
         </div>
     </div>
 
@@ -114,7 +128,6 @@
             "La réponse à ta question est OUI, mais pas de la manière dont tu l'imagines."
         ];
 
-        // Simulation du chargement
         const loadingSteps = [
             "Connexion à tes énergies...",
             "Mélange des arcanes...",
@@ -122,24 +135,42 @@
             "Finalisation de la guidance..."
         ];
 
-        let step = 0;
-        const loadingInterval = setInterval(() => {
-            document.getElementById("loading-text").innerText = loadingSteps[step];
-            step++;
-            if (step >= loadingSteps.length) {
-                clearInterval(loadingInterval);
-                revealMessage();
-            }
-        }, 1200);
+        const storageKey = "guidance_flash_saved";
+        const savedMessage = localStorage.getItem(storageKey);
 
-        function revealMessage() {
-            // Tirage au sort
+        if (savedMessage) {
+            document.getElementById("loading-text").innerText = "Récupération de ta guidance...";
+            setTimeout(() => {
+                showFinalResult(savedMessage);
+            }, 1000); 
+        } else {
+            let step = 0;
+            const loadingInterval = setInterval(() => {
+                document.getElementById("loading-text").innerText = loadingSteps[step];
+                step++;
+                if (step >= loadingSteps.length) {
+                    clearInterval(loadingInterval);
+                    revealNewMessage();
+                }
+            }, 1200);
+        }
+
+        function revealNewMessage() {
             var random = messages[Math.floor(Math.random() * messages.length)];
-            document.getElementById("message").innerText = random;
+            localStorage.setItem(storageKey, random);
+            showFinalResult(random);
+        }
 
-            // Bascule visuelle
+        function showFinalResult(text) {
+            document.getElementById("message").innerText = text;
             document.getElementById("loader").style.display = "none";
             document.getElementById("result").style.display = "block";
+        }
+
+        // Fonction pour effacer la mémoire et recharger
+        function resetGuidance() {
+            localStorage.removeItem(storageKey);
+            location.reload();
         }
     </script>
 
