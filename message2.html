@@ -24,28 +24,59 @@
         h1 { font-family: 'Cinzel', serif; font-size: 1.6em; letter-spacing: 3px; color: gold; margin-bottom: 40px; text-transform: uppercase; }
 
         /* Écran de départ obligatoire pour le SON */
-        #start-screen { margin-top: 100px; padding: 40px; border: 1px solid rgba(255,215,0,0.2); border-radius: 50%; width: 250px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.5s; margin: 100px auto; }
+        #start-screen { 
+            margin-top: 100px; 
+            padding: 40px; 
+            border: 1px solid rgba(255,215,0,0.2); 
+            border-radius: 50%; 
+            width: 250px; 
+            height: 250px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: 0.5s; 
+            margin: 100px auto; 
+        }
         #start-screen:hover { border-color: gold; box-shadow: 0 0 30px rgba(255,215,0,0.2); }
 
         .orb-glow { width: 80px; height: 80px; background: gold; border-radius: 50%; filter: blur(20px); opacity: 0.5; animation: pulse 2s infinite; }
         
         @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.2); opacity: 0.8; } }
 
-        /* Résultat */
+        /* Fenêtre de résultat arrondie */
         #result {
             display: none;
             background: rgba(255, 255, 255, 0.03);
-            border: 2px solid gold; /* BORDURE DORÉE BIEN VISIBLE */
+            border: 2px solid gold; 
             padding: 50px 30px;
+            border-radius: 20px; /* BORDURE ARRONDIE ICI */
             box-shadow: 0 0 40px rgba(218, 165, 32, 0.2);
             text-align: justify;
             line-height: 1.8;
-            font-size: 1.2em;
+            font-size: 1.1em;
+            animation: fadeIn 1.5s ease;
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         #loading-screen { display: none; margin-top: 100px; }
 
-        button { background: gold; color: black; border: none; padding: 15px 30px; font-family: 'Cinzel'; font-weight: bold; margin-top: 30px; cursor: pointer; width: 100%; }
+        button { 
+            background: gold; 
+            color: black; 
+            border: none; 
+            padding: 15px 30px; 
+            font-family: 'Cinzel'; 
+            font-weight: bold; 
+            border-radius: 50px; /* Bouton arrondi aussi */
+            margin-top: 30px; 
+            cursor: pointer; 
+            width: 100%; 
+            transition: 0.3s;
+        }
+        button:hover { transform: scale(1.02); filter: brightness(1.1); }
     </style>
 </head>
 <body>
@@ -61,7 +92,7 @@
         </div>
 
         <div id="loading-screen">
-            <h2 id="status" style="font-family: 'Cinzel';">Connexion spirituelle...</h2>
+            <h2 id="status" style="font-family: 'Cinzel'; color: white;">Connexion spirituelle...</h2>
             <div style="width: 100%; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px;">
                 <div id="bar" style="width: 0%; height: 100%; background: gold; transition: 5s linear;"></div>
             </div>
@@ -82,22 +113,16 @@
             "Tu es dans une phase où ton esprit cherche des réponses rapides, mais les véritables réponses demandent du recul et de la patience. Forcer les choses actuellement pourrait créer encore plus de confusion.",
             "Il existe en toi une tension entre ce que tu veux consciemment et ce que tu ressens profondément. Cette différence crée une forme d’instabilité intérieure qu’il est important de comprendre plutôt que de combattre.",
             "Une vérité que tu évites de regarder directement commence à se manifester de plus en plus clairement dans ton quotidien.",
-            "Une transformation discrète mais profonde est déjà en cours dans ta manière de penser. Tu dois accepter que certaines réponses ne sont pas encore disponibles pour toi maintenant."
+            "Une transformation discrète mais profonde est déjà en cours dans ta manière de penser. Tu dois accepter que certaines réponses ne sont pas encore disponibles pour toi maintenant.",
+            "La réponse que tu cherches viendra plus facilement lorsque tu arrêteras de la forcer mentalement. Tu es plus proche d'une prise de conscience importante que tu ne le réalises."
         ];
 
         function lancerGuidance() {
-            // Jouer le son
             const son = document.getElementById("audioPlayer");
             son.play();
-
-            // Masquer départ, montrer chargement
             document.getElementById("start-screen").style.display = "none";
             document.getElementById("loading-screen").style.display = "block";
-            
-            // Animation de barre
             setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
-
-            // Attendre 5 secondes puis montrer résultat
             setTimeout(afficherResultat, 5000);
         }
 
@@ -105,14 +130,12 @@
             document.getElementById("loading-screen").style.display = "none";
             document.getElementById("result").style.display = "block";
 
-            // TIRAGE DE 2 MESSAGES POUR FAIRE LONG
             let m1 = mesMessages[Math.floor(Math.random() * mesMessages.length)];
             let m2 = mesMessages[Math.floor(Math.random() * mesMessages.length)];
             while(m1 === m2) { m2 = mesMessages[Math.floor(Math.random() * mesMessages.length)]; }
 
             const texteFinal = m1 + "<br><br>" + m2;
             
-            // Effet machine à écrire
             let i = 0;
             const container = document.getElementById("text-container");
             function typewriter() {
