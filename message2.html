@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         body {
-            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            background: radial-gradient(circle at center, #0a0a1a 0%, #000000 100%);
             color: #e0e0e0;
             font-family: 'Lora', serif;
             text-align: center;
@@ -21,134 +21,113 @@
 
         .container { max-width: 700px; width: 100%; }
 
-        h1 { font-family: 'Cinzel', serif; font-size: 1.6em; letter-spacing: 3px; color: #fff; margin-bottom: 40px; text-transform: uppercase; }
+        h1 { font-family: 'Cinzel', serif; font-size: 1.6em; letter-spacing: 3px; color: gold; margin-bottom: 40px; text-transform: uppercase; }
 
-        #loader { margin-top: 100px; cursor: pointer; }
-        .orb {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            background: radial-gradient(circle at 30% 30%, #5d5dff, #000);
-            box-shadow: 0 0 40px rgba(93, 93, 255, 0.4);
-            animation: pulse 2s infinite ease-in-out;
-        }
-        @keyframes pulse { 
-            0%, 100% { transform: scale(1); opacity: 0.6; } 
-            50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 60px rgba(93, 93, 255, 0.7); } 
-        }
+        /* Écran de départ obligatoire pour le SON */
+        #start-screen { margin-top: 100px; padding: 40px; border: 1px solid rgba(255,215,0,0.2); border-radius: 50%; width: 250px; height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.5s; margin: 100px auto; }
+        #start-screen:hover { border-color: gold; box-shadow: 0 0 30px rgba(255,215,0,0.2); }
 
+        .orb-glow { width: 80px; height: 80px; background: gold; border-radius: 50%; filter: blur(20px); opacity: 0.5; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.2); opacity: 0.8; } }
+
+        /* Résultat */
         #result {
             display: none;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid gold; /* BORDURE DORÉE BIEN VISIBLE */
             padding: 50px 30px;
-            border-radius: 5px;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            margin-top: 20px;
-        }
-
-        #message {
-            font-size: 19px;
-            line-height: 1.8;
-            color: #f0f0f0;
+            box-shadow: 0 0 40px rgba(218, 165, 32, 0.2);
             text-align: justify;
+            line-height: 1.8;
+            font-size: 1.2em;
         }
 
-        .highlight { color: gold; font-family: 'Cinzel', serif; display: block; margin-bottom: 20px; font-size: 1.2em; }
+        #loading-screen { display: none; margin-top: 100px; }
 
-        button {
-            background: transparent; border: 1px solid #444; color: #888;
-            padding: 12px 25px; border-radius: 2px; cursor: pointer;
-            font-family: 'Cinzel', serif; font-size: 0.7em; margin-top: 40px;
-        }
+        button { background: gold; color: black; border: none; padding: 15px 30px; font-family: 'Cinzel'; font-weight: bold; margin-top: 30px; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
 
-    <audio id="mysticSound" src="https://www.soundjay.com/nature/sounds/wind-chime-1.mp3"></audio>
+    <audio id="audioPlayer">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="container">
-        <div id="start-screen">
-            <div class="orb" onclick="startGuidance()"></div>
-            <h2 style="font-family: 'Cinzel'; font-size: 1em; color: gold; cursor:pointer;" onclick="startGuidance()">
-                Clique sur l'orbe pour activer ta guidance
-            </h2>
+        <div id="start-screen" onclick="lancerGuidance()">
+            <div class="orb-glow"></div>
+            <p style="font-family: 'Cinzel'; font-size: 0.8em; margin-top: 20px; color: gold;">ACTIVER MON<br>ANALYSE</p>
         </div>
 
-        <div id="loader" style="display:none;">
-            <div class="orb"></div>
-            <h2 id="loading-text" style="font-family: 'Cinzel'; font-weight: normal; font-size: 1em; letter-spacing: 2px;">Canalisation...</h2>
+        <div id="loading-screen">
+            <h2 id="status" style="font-family: 'Cinzel';">Connexion spirituelle...</h2>
+            <div style="width: 100%; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px;">
+                <div id="bar" style="width: 0%; height: 100%; background: gold; transition: 5s linear;"></div>
+            </div>
         </div>
 
         <div id="result">
-            <span class="highlight">Ton Analyse Profonde</span>
-            <p id="message"></p>
-            <button onclick="window.print()">Conserver cette guidance</button>
+            <h2 style="font-family: 'Cinzel'; color: gold; text-align: center; margin-top: 0;">Ta Guidance Détaillée</h2>
+            <div id="text-container"></div>
+            <button onclick="window.print()">Sauvegarder mon message</button>
         </div>
     </div>
 
     <script>
-        const messages = [
+        const mesMessages = [
             "Tu traverses actuellement une période où plusieurs éléments de ta vie semblent se mélanger, créant une confusion intérieure qui t’empêche de voir clairement la direction à prendre. Ce n’est pas un blocage définitif, mais une phase de réajustement mental et émotionnel.",
             "Une situation passée continue d’influencer inconsciemment tes choix actuels. Même si tu penses être passé à autre chose, certaines émotions n’ont pas encore été totalement intégrées, ce qui crée une forme de répétition dans tes expériences.",
             "Ce que tu ressens en ce moment n’est pas à ignorer. Il s’agit d’un signal intérieur qui t’indique que quelque chose doit être observé plus attentivement avant de prendre une décision importante.",
             "Tu es dans une phase où ton esprit cherche des réponses rapides, mais les véritables réponses demandent du recul et de la patience. Forcer les choses actuellement pourrait créer encore plus de confusion.",
             "Il existe en toi une tension entre ce que tu veux consciemment et ce que tu ressens profondément. Cette différence crée une forme d’instabilité intérieure qu’il est important de comprendre plutôt que de combattre.",
-            "Une personne ou une situation a encore un impact émotionnel sur toi, même si tu essaies de t’en détacher. Cette influence agit de manière subtile sur tes choix récents.",
             "Une vérité que tu évites de regarder directement commence à se manifester de plus en plus clairement dans ton quotidien.",
-            "Tu es guidé vers une meilleure clarté intérieure même si cela n’est pas encore visible. Une étape importante de ton évolution personnelle est en cours."
-            // ... (Ajoute tes autres messages ici)
+            "Une transformation discrète mais profonde est déjà en cours dans ta manière de penser. Tu dois accepter que certaines réponses ne sont pas encore disponibles pour toi maintenant."
         ];
 
-        function startGuidance() {
+        function lancerGuidance() {
+            // Jouer le son
+            const son = document.getElementById("audioPlayer");
+            son.play();
+
+            // Masquer départ, montrer chargement
             document.getElementById("start-screen").style.display = "none";
-            document.getElementById("loader").style.display = "block";
+            document.getElementById("loading-screen").style.display = "block";
             
-            // Lancer le son (nécessite une action utilisateur, d'où le clic sur l'orbe)
-            const audio = document.getElementById("mysticSound");
-            audio.volume = 0.3;
-            audio.play();
+            // Animation de barre
+            setTimeout(() => { document.getElementById("bar").style.width = "100%"; }, 100);
 
-            let s = 0;
-            const steps = ["Analyse des énergies...", "Connexion au guide...", "Rédaction du message..."];
-            const load = setInterval(() => {
-                document.getElementById("loading-text").innerText = steps[s];
-                s++;
-                if(s >= steps.length) { clearInterval(load); show(); }
-            }, 2000);
+            // Attendre 5 secondes puis montrer résultat
+            setTimeout(afficherResultat, 5000);
         }
 
-        function show() {
-            document.getElementById("loader").style.display = "none";
+        function afficherResultat() {
+            document.getElementById("loading-screen").style.display = "none";
             document.getElementById("result").style.display = "block";
-            
-            // ON EN PREND DEUX AU HASARD POUR FAIRE UN TEXTE LONG
-            const msg1 = messages[Math.floor(Math.random() * messages.length)];
-            let msg2 = messages[Math.floor(Math.random() * messages.length)];
-            while(msg1 === msg2) { msg2 = messages[Math.floor(Math.random() * messages.length)]; }
-            
-            const fullText = msg1 + "<br><br>" + msg2;
-            typeEffect(fullText, "message", 40);
-        }
 
-        function typeEffect(text, id, speed) {
-            let j = 0;
-            const el = document.getElementById(id);
-            el.innerHTML = "";
-            function type() {
-                if (j < text.length) { 
-                    if (text.substr(j, 4) === "<br>") {
-                        el.innerHTML += "<br>";
-                        j += 4;
+            // TIRAGE DE 2 MESSAGES POUR FAIRE LONG
+            let m1 = mesMessages[Math.floor(Math.random() * mesMessages.length)];
+            let m2 = mesMessages[Math.floor(Math.random() * mesMessages.length)];
+            while(m1 === m2) { m2 = mesMessages[Math.floor(Math.random() * mesMessages.length)]; }
+
+            const texteFinal = m1 + "<br><br>" + m2;
+            
+            // Effet machine à écrire
+            let i = 0;
+            const container = document.getElementById("text-container");
+            function typewriter() {
+                if (i < texteFinal.length) {
+                    if (texteFinal.substr(i, 4) === "<br>") {
+                        container.innerHTML += "<br>";
+                        i += 4;
                     } else {
-                        el.innerHTML += text.charAt(j);
-                        j++;
+                        container.innerHTML += texteFinal.charAt(i);
+                        i++;
                     }
-                    setTimeout(type, speed); 
+                    setTimeout(typewriter, 30);
                 }
             }
-            type();
+            typewriter();
         }
     </script>
 </body>
