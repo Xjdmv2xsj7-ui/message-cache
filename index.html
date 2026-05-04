@@ -108,7 +108,7 @@
             background: #f0f0f0;
         }
 
-        /* Spécificités pour la carte OR */
+        /* Spécificités pour la carte OR (14,99€) */
         .gold-card {
             border: 1px solid gold;
             background: rgba(218, 165, 32, 0.05);
@@ -129,7 +129,6 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* Bouton doré */
         .gold-button {
             background: linear-gradient(45deg, #ffd700, #ffae00);
             color: #000000;
@@ -139,6 +138,41 @@
         .gold-button:hover {
             background: linear-gradient(45deg, #ffeb3b, #ffd700);
             box-shadow: 0 6px 25px rgba(218, 165, 32, 0.5);
+        }
+
+        /* --- NOUVEAU : STYLE DE L'OFFRE DIAMANT (89€) --- */
+        .diamond-card {
+            border: 1px solid #b9f2ff;
+            background: rgba(185, 242, 255, 0.07);
+            box-shadow: 0 0 20px rgba(185, 242, 255, 0.1);
+        }
+        
+        .diamond-card:hover {
+            border-color: #ffffff;
+            box-shadow: 0 10px 40px rgba(185, 242, 255, 0.3);
+        }
+
+        .exclusif-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #b9f2ff;
+            font-weight: bold;
+            font-size: 0.8em;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 10px rgba(185, 242, 255, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .diamond-button {
+            background: linear-gradient(45deg, #b9f2ff, #ffffff);
+            color: #000000;
+            box-shadow: 0 4px 15px rgba(185, 242, 255, 0.4);
+        }
+
+        .diamond-button:hover {
+            background: #ffffff;
+            box-shadow: 0 6px 25px rgba(185, 242, 255, 0.7);
         }
 
         /* Adaptation mobile */
@@ -155,6 +189,7 @@
         <h1>Ton Message Caché</h1>
         <p class="subtitle">Découvre ce que l'univers tente de te dire...</p>
 
+        <!-- OFFRE 1 -->
         <div class="offre-card">
             <span class="icon-symbol">⚡</span>
             <h2>Message rapide</h2>
@@ -164,6 +199,7 @@
             </a>
         </div>
 
+        <!-- OFFRE 2 -->
         <div class="offre-card">
             <span class="icon-symbol">🔮</span>
             <h2>Message détaillé</h2>
@@ -173,6 +209,7 @@
             </a>
         </div>
 
+        <!-- OFFRE 3 -->
         <div class="offre-card gold-card">
             <span class="recommande-badge">⭐ Recommandé</span>
             <span class="icon-symbol">👑</span>
@@ -182,6 +219,23 @@
                 <button class="gold-button">Accéder - 14,99€</button>
             </a>
         </div>
+
+        <!-- OFFRE 4 (NOUVEAU) -->
+        <div class="offre-card diamond-card">
+            <span class="exclusif-badge">✨ Canalisation Privée</span>
+            <span class="icon-symbol">💠</span>
+            <h2>Le Grand Oracle de votre Destinée</h2>
+            <p class="description">
+                L'analyse la plus profonde de votre existence. Un rapport personnalisé de 15+ pages révélant votre mission de vie et vos prévisions détaillées pour l'année à venir.
+            </p>
+            <a href="https://buy.stripe.com/9B6aEZ8OraLf2xa4cz3VC03">
+                <button class="diamond-button">Commander mon Oracle - 89€</button>
+            </a>
+            <p style="font-size: 0.8em; margin-top: 15px; font-style: italic; opacity: 0.6;">
+                Livré sous 48h par email au format PDF.
+            </p>
+        </div>
+
     </div>
 
 </body>
